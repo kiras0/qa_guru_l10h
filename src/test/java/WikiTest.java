@@ -6,12 +6,15 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
+import pages.WikipediaMain;
+import pages.WikipediaResults;
 
 
 @DisplayName("Wikipedia parametrized test")
 public class WikiTest extends TestBase{
 WikipediaComponents wikipediaComponents = new WikipediaComponents();
+WikipediaResults wikipediaResults = new WikipediaResults();
+WikipediaMain wikipediaMain = new WikipediaMain();
 
     @EnumSource(Language.class)
     @Tag("BLOCKER")
@@ -19,7 +22,9 @@ WikipediaComponents wikipediaComponents = new WikipediaComponents();
     void landingPageHasCorrectWelcomeMessage(Language lang) {
         wikipediaComponents
                 .openPage()
-                .languageSelection(lang)
+                .languageSelection(lang);
+
+        wikipediaMain
                 .welcomeMessageCheck(lang);
     }
 
@@ -29,7 +34,9 @@ WikipediaComponents wikipediaComponents = new WikipediaComponents();
     public void successfulSearchTest(String searchRequest) {
         wikipediaComponents
                 .openPage()
-                .setValueSearch(searchRequest)
+                .setValueSearch(searchRequest);
+
+        wikipediaResults
                 .checkResultHasContent();
     }
 
@@ -39,7 +46,9 @@ WikipediaComponents wikipediaComponents = new WikipediaComponents();
     void searchResultShouldHaveInformationAboutQuery(String searchRequest, String text) {
         wikipediaComponents
                 .openPage()
-                .setValueSearch(searchRequest)
+                .setValueSearch(searchRequest);
+
+        wikipediaResults
                 .checkCorrectResult(text);
 
     }
